@@ -6,9 +6,9 @@ import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
 public @interface HipsterEntity {
-	public String table();
+	public String table() default "";
 
 	public boolean genMeta() default true;
 
-	boolean genUpdate() default true;
+	public boolean genUpdate() default true;
 }

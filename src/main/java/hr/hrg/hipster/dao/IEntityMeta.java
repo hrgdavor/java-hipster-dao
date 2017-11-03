@@ -6,6 +6,8 @@ import hr.hrg.hipster.sql.*;
 public interface IEntityMeta<T,ID,E extends IColumnMeta> extends IReadMeta<T,E>{
 
 	Class<E> getEntityEnum();
+
+	String getEntityName();
 	
 	boolean containsColumn(String columnName);
 	

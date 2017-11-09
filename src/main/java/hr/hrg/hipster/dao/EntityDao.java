@@ -40,8 +40,11 @@ public class EntityDao <T, ID>{
 		}		
 	}
 
-	public List<T> byCriteria(Object ...queryParts){
-		return conn.entities(meta, new Query(selectQuery).append(queryParts));		
+	public T byCriteria(Object ...queryParts){
+		return conn.entity(meta, new Query(selectQuery).append(queryParts));		
 	}
 
+	public List<T> allByCriteria(Object ...queryParts){
+		return conn.entities(meta, new Query(selectQuery).append(queryParts));		
+	}
 }

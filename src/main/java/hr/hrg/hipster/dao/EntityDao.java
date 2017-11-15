@@ -11,9 +11,19 @@ public class EntityDao <T, ID>{
 	protected String byIdQuery;
 	protected String selectQuery;
 
+	@SuppressWarnings("unchecked")
+	public EntityDao(Class<T> clazz, IHipsterConnection conn, EntitySource entitySource){
+		this.meta = (IEntityMeta<T, ID, ? extends IColumnMeta>) entitySource.getFor(clazz);
+		this.conn = conn;
+	}
+
 	public EntityDao(IEntityMeta<T, ID, ? extends IColumnMeta> meta, IHipsterConnection conn){
 		this.meta = meta;
 		this.conn = conn;
+		init();
+	}
+
+	public void init() {
 		selectQuery = "select "+meta.getColumnNamesStr()+" FROM "+meta.getTableName()+" ";
 
 		if(meta.getPrimaryColumn() != null){

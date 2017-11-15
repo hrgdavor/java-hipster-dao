@@ -18,6 +18,11 @@ public class EntitySource {
 		this.resultGetterSource = resultGetterSource;
 	}
 	
+	public <T> void registerFor(IEntityMeta<T, ?,?> meta){
+		Class<T> clazz = meta.getEntityClass();		
+		registerFor(meta, clazz);
+	}
+
 	public <T> void registerFor(IEntityMeta<T, ?,?> meta, Class<T> clazz){
 		registered.put(clazz, meta);
 		named.put(clazz.getSimpleName(), meta);
@@ -66,6 +71,14 @@ public class EntitySource {
 			throw new RuntimeException("Found possible generated Visitor handler class, but faild to instantiate ",e);
 		}
 		return null;
+	}
+
+	@SafeVarargs
+	public static final void registerBoth(EntitySource entitySource, ReaderSource readerSource, IEntityMeta<?, ?,? extends IColumnMeta> ...metas ){
+		for (IEntityMeta<?, ?, ? extends IColumnMeta> meta : metas) {
+			entitySource.registerFor(meta);
+			readerSource.registerFor(meta);
+		}
 	}
 	
 }
